@@ -1,1 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Section - Digital Agency</title>
+    
+    <!-- Font Awesome CDN for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- Global Styles & Reset --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
 
+        body {
+            background-color: #1f2937; /* gray-800 */
+            color: white;
+        }
+
+        /* --- Hero Container --- */
+        .hero-container {
+            position: relative;
+            text-align: white;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        @media (min-width: 640px) {
+            .hero-container { padding: 2.5rem; }
+        }
+
+        /* --- Hero Headings --- */
+        .hero-headings {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-headings h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            width: 100%;
+        }
+
+        .hero-headings h1.bold { font-weight: 700; }
+        .hero-headings h1.semibold { font-weight: 600; margin-top: 2.5rem; }
+
+        @media (min-width: 768px) {
+            .hero-headings h1 { font-size: 4.5rem; }
+        }
+
+        /* Typewriter specific */
+        .typewriter-line {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: white;
+            min-height: 2rem;
+            margin-top: 0.5rem;
+        }
+
+        .cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* --- Need Help? Sidebar Button --- */
+        .help-btn-trigger {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 0;
+            width: 48px;
+            height: 192px;
+            background-color: #eab308; /* yellow-500 */
+            border-radius: 0.375rem 0 0 0.375rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            transition: background-color 0.3s;
+        }
+
+        .help-btn-trigger:hover {
+            background-color: #ca8a04; /* yellow-600 */
+        }
+
+        .help-btn-trigger span {
+            transform: rotate(-90deg);
+            color: black;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+        }
+
+        /* --- Need Help? Expanded Card --- */
+        .help-card {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 1rem;
+            width: 90vw;
+            max-width: 24rem; /* sm */
+            background-color: white;
+            color: black;
+            border-radius: 0.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            z-index: 50;
+            display: none; /* Hidden by default */
+        }
+
+        .help-card.active { display: block; }
+
+        .help-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .help-card-header h2 { font-size: 1.25rem; font-weight: 600; }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: #ef4444; /* red-500 */
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .help-card p { color: #374151; margin-bottom: 1rem; }
+        
+        .help-card a img {
+            width: 100%;
+            border-radius: 0.375rem;
+            transition: opacity 0.3s;
+        }
+
+        .help-card a img:hover { opacity: 0.9; }
+
+        /* --- Form Section --- */
+        .form-section {
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 1rem;
+            margin-top: 5rem;
+            border-left: 4px solid #facc15; /* yellow-400 */
+        }
+
+        @media (min-width: 640px) { .form-section { padding: 2rem; } }
+        @media (min-width: 768px) { .form-section { margin-top: 7rem; } }
+
+        .form-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .form-wrapper {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .input-group { flex-direction: row; }
+        }
+
+        /* Input Styles */
+        .input-wrapper {
+            width: 100%;
+            position: relative;
+        }
+
+        .input-wrapper .icon {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            padding-left: 0.75rem;
+            color: #9ca3af; /* gray-400 */
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+            border-radius: 0.375rem;
+            border: none;
+            border-bottom: 2px solid white;
+            background-color: black;
+            color: white;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-wrapper input.error { border-bottom-color: #ef4444; }
+        
+        .error-text {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Button Styles */
+        .btn-wrapper {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .btn-wrapper { 
+                width: auto; 
+                margin-top: 0;
+            }
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: #facc15; /* yellow-400 */
+            color: black;
+            font-weight: bold;
+            padding: 0.875rem 2rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover { background-color: #ca8a04; /* yellow-600 */ }
+
+        /* Success Message */
+        .success-message {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-message h2 {
+            font-size: 1.875rem;
+            font-weight: bold;
+            color: #facc15;
+            margin-bottom: 1rem;
+        }
+
+        .success-message > p {
+            font-size: 1.125rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-card {
+            text-align: left;
+            background-color: #111827; /* gray-900 */
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+
+        .info-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #374151;
+        }
+
+        .info-card p { margin-bottom: 0.5rem; }
+        .info-card p strong { margin-right: 0.5rem; }
+
+        /* Hide steps */
+        .step { display: none; }
+        .step.active { display: block; }
+
+        /* --- Hero Bottom Logos --- */
+        .hero-bottom {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .logos-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logos-container img {
+            height: 4rem; /* h-16 */
+            filter: brightness(0) invert(1); /* Making placeholder images white */
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-container">
+        
+        <!-- Hero Headings -->
+        <div class="hero-headings">
+            <h1 class="semibold">Award Winning</h1>
+            <h1 class="bold">Digital Marketing Agency</h1>
+            <h6 class="typewriter-line">
+                <span id="typed-text"></span><span class="cursor">|</span>
+            </h6>
+        </div>
+
+        <!-- Need Help? Button -->
+        <div class="help-btn-trigger" id="helpBtnTrigger" onclick="toggleHelpCard(true)">
+            <span>Need Help?</span>
+        </div>
+
+        <!-- Expanded Help Card -->
+        <div class="help-card" id="helpCard">
+            <div class="help-card-header">
+                <h2>Digital Support Portal</h2>
+                <button class="close-btn" onclick="toggleHelpCard(false)">&times;</button>
+            </div>
+            <p>For direct assistance, please visit our dedicated help center.</p>
+            <a href="/help-center">
+                <!-- Placeholder image similar to Unsplash -->
+                <img src="https://images.unsplash.com/photo-1556740758-90de374c12ad?w=500&q=80" alt="Visit our Help Center">
+            </a>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-section">
+            
+            <!-- Step 1 -->
+            <form class="step active" id="step-1" onsubmit="handleNextStep(event)">
+                <div class="form-wrapper">
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <span class="icon"><i class="fas fa-user"></i></span>
+                            <input type="text" name="fullName" id="fullName" placeholder="Full Name">
+                            <p class="error-text" id="fullName-error"></p>
+                        </div>
+                        <div class="input-wrapper">
+                            <span class="icon"><i class="fas fa-envelope"></i></span>
+                            <input type="email" name="email" id="email" placeholder="Email Address">
+                            <p class="error-text" id="email-error"></p>
+                        </div>
+                        <div class="input-wrapper">
+                            <span class="icon"><i class="fas fa-phone"></i></span>
+                            <input type="tel" name="phone" id="phone" placeholder="Phone Number (Optional)">
+                        </div>
+                    </div>
+                    <div class="btn-wrapper">
+                        <button type="submit" class="submit-btn">Get Started</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Step 2 -->
+            <form class="step" id="step-2" onsubmit="handleSubmit(event)">
+                <div class="form-wrapper">
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <span class="icon"><i class="fas fa-building"></i></span>
+                            <input type="text" name="company" id="company" placeholder="Company">
+                            <p class="error-text" id="company-error"></p>
+                        </div>
+                        <div class="input-wrapper">
+                            <span class="icon"><i class="fas fa-share-alt"></i></span>
+                            <input type="text" name="service" id="service" placeholder="Social Media Management">
+                            <p class="error-text" id="service-error"></p>
+                        </div>
+                        <div class="input-wrapper">
+                            <span class="icon"><i class="fas fa-question-circle"></i></span>
+                            <input type="text" name="help" id="help" placeholder="How can we help?">
+                            <p class="error-text" id="help-error"></p>
+                        </div>
+                    </div>
+                    <div class="btn-wrapper">
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Step 3: Success -->
+            <div class="step" id="step-3">
+                <div class="success-message">
+                    <h2>Submission Successful!</h2>
+                    <p>Thank you for reaching out. We have received your information and will be in touch shortly.</p>
+                    <div class="info-card">
+                        <h3>Your Provided Information:</h3>
+                        <p><strong>Full Name:</strong> <span id="disp-name"></span></p>
+                        <p><strong>Email:</strong> <span id="disp-email"></span></p>
+                        <p id="disp-phone-row" style="display:none;"><strong>Phone:</strong> <span id="disp-phone"></span></p>
+                        <p><strong>Company:</strong> <span id="disp-company"></span></p>
+                        <p><strong>Service:</strong> <span id="disp-service"></span></p>
+                        <p><strong>Inquiry:</strong> <span id="disp-help"></span></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Hero Bottom Logos (Using placeholders) -->
+        <div class="hero-bottom">
+            <div class="logos-container">
+                <!-- Yahan aap apni SVG images ki jagah ye placeholders use kar sakte hain ya src change kar sakte hain -->
+                <img src="https://via.placeholder.com/100x40?text=Logo+1" alt="Image 1">
+                <img src="https://via.placeholder.com/100x40?text=Logo+2" alt="Image 2">
+                <img src="https://via.placeholder.com/100x40?text=Logo+3" alt="Image 3">
+                <img src="https://via.placeholder.com/100x40?text=Logo+4" alt="Image 4">
+                <img src="https://via.placeholder.com/100x40?text=Logo+5" alt="Image 5">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JavaScript for Logic, Validation, and Typewriter -->
+    <script>
+        // --- Typewriter Effect ---
+        const phrases = [
+            'We are passionate about Facebook Advertising.',
+            'We are passionate about Google Ads.',
+            'We are passionate about Instagram Promotions.'
+        ];
+        
+        let phraseIndex = 0;
+        let charIndex = 0;
+        const typedTextElement = document.getElementById('typed-text');
+
+        function typeWriter() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (charIndex < currentPhrase.length) {
+                typedTextElement.textContent += currentPhrase.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 80);
+            } else {
+                // Phrase complete, wait then reset
+                setTimeout(() => {
+                    typedTextElement.textContent = '';
+                    charIndex = 0;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    typeWriter();
+                }, 2000);
+            }
+        }
+
+        // Start typewriter
+        typeWriter();
+
+
+        // --- Help Card Toggle ---
+        function toggleHelpCard(show) {
+            const card = document.getElementById('helpCard');
+            const btn = document.getElementById('helpBtnTrigger');
+            if (show) {
+                card.classList.add('active');
+                btn.style.display = 'none';
+            } else {
+                card.classList.remove('active');
+                btn.style.display = 'flex';
+            }
+        }
+
+
+        // --- Form Logic ---
+        let currentStep = 1;
+        const formData = {
+            fullName: '', email: '', phone: '',
+            company: '', service: '', help: ''
+        };
+
+        // Helper to show errors
+        function showError(id, message) {
+            const input = document.getElementById(id);
+            const errorEl = document.getElementById(id + '-error');
+            if (input) input.classList.add('error');
+            if (errorEl) errorEl.textContent = message;
+        }
+
+        // Helper to clear errors
+        function clearErrors() {
+            document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+            document.querySelectorAll('.error-text').forEach(el => el.textContent = '');
+        }
+
+        // Switch Steps
+        function goToStep(stepNum) {
+            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+            document.getElementById('step-' + stepNum).classList.add('active');
+            currentStep = stepNum;
+        }
+
+        // Get form data from inputs
+        function getInputValues() {
+            formData.fullName = document.getElementById('fullName').value;
+            formData.email = document.getElementById('email').value;
+            formData.phone = document.getElementById('phone').value;
+            formData.company = document.getElementById('company').value;
+            formData.service = document.getElementById('service').value;
+            formData.help = document.getElementById('help').value;
+        }
+
+        // Step 1 Validation & Next
+        function handleNextStep(e) {
+            e.preventDefault();
+            clearErrors();
+            getInputValues();
+            
+            let isValid = true;
+
+            if (!formData.fullName) {
+                showError('fullName', 'Full Name is required.');
+                isValid = false;
+            }
+            if (!formData.email) {
+                showError('email', 'Email Address is required.');
+                isValid = false;
+            } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+                showError('email', 'Email address is invalid.');
+                isValid = false;
+            }
+
+            if (isValid) {
+                goToStep(2);
+            }
+        }
+
+        // Step 2 Validation & Submit
+        function handleSubmit(e) {
+            e.preventDefault();
+            clearErrors();
+            getInputValues();
+
+            let isValid = true;
+
+            if (!formData.company) {
+                showError('company', 'Company name is required.');
+                isValid = false;
+            }
+            if (!formData.service) {
+                showError('service', 'This field is required.');
+                isValid = false;
+            }
+            if (!formData.help) {
+                showError('help', 'Please tell us how we can help.');
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Populate Success Screen
+                document.getElementById('disp-name').textContent = formData.fullName;
+                document.getElementById('disp-email').textContent = formData.email;
+                
+                if (formData.phone) {
+                    document.getElementById('disp-phone').textContent = formData.phone;
+                    document.getElementById('disp-phone-row').style.display = 'block';
+                }
+
+                document.getElementById('disp-company').textContent = formData.company;
+                document.getElementById('disp-service').textContent = formData.service;
+                document.getElementById('disp-help').textContent = formData.help;
+
+                goToStep(3);
+            }
+        }
+    </script>
+</body>
+</html>
